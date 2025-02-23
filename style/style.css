@@ -1,0 +1,29 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+}
+
+body{
+    /* background-size: cover  ; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #C7C8CC;
+}
+
+#container{
+    width: 80vw;
+    height: 80vh;
+    /* border: 2px, solid black; */
+    border-radius: 20px;
+    /* background-image: url(../media/homebg.png);     */
+
+}
+#fieldImg{
+    border-radius: 1vmin;
+
+
+}
