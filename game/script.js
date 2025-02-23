@@ -13,7 +13,6 @@ function CreateField(){
     main.appendChild(field) 
     bg.setAttribute('src', './media/homebg.png');
     bg.setAttribute('id', 'fieldImg');
-
     bg.setAttribute('alt', 'Background');
     bg.setAttribute('height', '100%');
     bg.setAttribute('width', '100%');
