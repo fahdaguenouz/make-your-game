@@ -6,7 +6,7 @@ class Dog{
     }
 
     appear(){
-        const 
+        
     }
 
 }
