@@ -1,7 +1,10 @@
+import  Duck from  "./duck.js"
 document.addEventListener("DOMContentLoaded",()=>{
-   CreateField()
-
-
+    CreateField()
+    const duck =new Duck(80,60)
+    duck.render()
+    duck.fly()
+    
 }) 
 
 

@@ -17,15 +17,15 @@
         function start() {
             const audio = document.getElementById('gameAudio'); 
             audio.play()
-                .then(() => {
-                    console.log("Audio is playing");
-                })
-                .catch((error) => {
-                    console.error("Error playing audio:", error);
-                });
+            .then(() => {
+                console.log("Audio is playing");
+            })
+            .catch((error) => {
+                console.error("Error playing audio:", error);
+            });
             alert("Not yet! Stay tuned.");
         }
-    </script>
-    <script src="./game/script.js"></script>
+        </script>
+    <script type="module" src="./game/script.js"></script>
 </body>
 </html>
