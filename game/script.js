@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     dog.render()
     duck.render()
     duck.fly()
-    
+    startGame(duck)
 }) 
 
 
@@ -26,3 +26,15 @@ function CreateField(){
     main.appendChild(bg)
 }
     
+function startGame(duck) {
+    // Ensure the duck element is properly selected after rendering
+    const duckElement = document.querySelector(".duck");
+
+    if (duckElement) {
+        duckElement.addEventListener("click", () => {
+            if (typeof duck.stop === "function") {
+                duck.stop(); // Stop the duck if the stop() method exists
+            }
+        });
+    }
+}

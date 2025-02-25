@@ -5,7 +5,7 @@ class Duck  {
         this.position = position || { x: 50, y: 50 };
         this.element = null;
         this.flyInterval = null;
-        this.speed = { x: 4 + Math.random() * 30, y: 2 + Math.random() * 5 };
+        this.speed = { x: 4 + Math.random() * 15, y: 2 + Math.random() * 5 };
         this.id = 'duck-' + Math.floor(Math.random() * 10000);
         this.flapping = true;
     }
