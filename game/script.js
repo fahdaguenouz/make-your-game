@@ -1,7 +1,11 @@
 import  Duck from  "./duck.js"
+import  Dog from  "./dog.js"
+
 document.addEventListener("DOMContentLoaded",()=>{
     CreateField()
     const duck =new Duck(80,60)
+    const dog =new Dog(100,100)
+    dog.render()
     duck.render()
     duck.fly()
     
