@@ -72,10 +72,16 @@ class Duck  {
                 }
             }
             
-            stop() {
+            die() {
                 if (this.flyInterval) {
+                    const imgDuck = document.getElementById(this.id);
+
+                    imgDuck.setAttribute("src","../media/duck-die.png")
                     clearInterval(this.flyInterval);
                     this.flyInterval = null;
+                    setTimeout(() => {
+                        imgDuck.remove()
+                    }, 500);
                 }
                 return this;
             }

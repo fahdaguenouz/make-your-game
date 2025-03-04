@@ -32,8 +32,8 @@ function startGame(duck) {
 
     if (duckElement) {
         duckElement.addEventListener("click", () => {
-            if (typeof duck.stop === "function") {
-                duck.stop(); // Stop the duck if the stop() method exists
+            if (typeof duck.die === "function") {
+                duck.die(); // Stop the duck if the stop() method exists
             }
         });
     }
