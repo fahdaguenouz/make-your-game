@@ -1,13 +1,13 @@
 class Duck  {
-    constructor(width,height,position){
+    constructor(width,height){
         this.height=width
         this.width=height
-        this.position = position || { x: 50, y: 50 };
+        this.position =  { x: 550, y: 650 };
         this.element = null;
         this.flyInterval = null;
-        this.speed = { x: 4 + Math.random() * 15, y: 2 + Math.random() * 5 };
-        this.id = 'duck-' + Math.floor(Math.random() * 10000);
-        this.flapping = true;
+        this.speed = { x: 6+ Math.random() *5, y: 2 + Math.random() * 5 };
+        this.id = 'duck-' + Math.floor(Math.random() * 15);
+
     }
     render() {
         const imgDuck = document.createElement("img");
@@ -34,33 +34,30 @@ class Duck  {
                     const container = document.querySelector("#container");
                     const containerWidth = container.clientWidth;
                     const containerHeight = container.clientHeight;
+                    //console.log(containerHeight,containerWidth);
                     
                     // Update position
                     this.position.x += this.speed.x;
                     this.position.y += this.speed.y;
+                   // console.log(this.position.x,this.position.y);
                     
                     // Bounce off walls
-                    if (this.position.x > containerWidth - this.width || this.position.x < 0) {
+                    
+                    if (this.position.x > containerWidth+50  || this.position.x < 20) {
+                        console.log(this.position.x,containerWidth);
                         this.speed.x *= -1;
-                        this.faceDirection();
+                       // this.faceDirection();
                     }
                     
-                    if (this.position.y > containerHeight - this.height || this.position.y < 0) {
+                    if (this.position.y > containerHeight-15 || this.position.y < 14) {
                         this.speed.y *= -1;
                     }
                     
-                    // Update element position
+                    // // Update element position
                     this.element.style.left = this.position.x + "px";
-                    this.element.style.top = this.position.y + "px";
+                 this.element.style.top = this.position.y + "px";
                     
-                    // Simulate flapping
-                    if (this.flapping) {
-                        this.element.style.transform = `translateY(-5px)`;
-                        this.flapping = false;
-                    } else {
-                        this.element.style.transform = `translateY(0px)`;
-                        this.flapping = true;
-                    }
+    
                     
                 }, 50);
                 
