@@ -1,31 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/style.css">
-    <title>FAhd&&Farsi Hunter</title>
-</head>
-<body>
-    <h1>Welcome to hunt Fahd and Farsi</h1>
-    <button class="btn" onclick=start()>start the game </button>
-    <main id="container">
-    </main>
-    <audio id="gameAudio" src="./media/sooo-funny-82640.mp3">hihi</audio>
-    
-    <script>
-        function start() {
-            const audio = document.getElementById('gameAudio'); 
-            audio.play()
-            .then(() => {
-                console.log("Audio is playing");
-            })
-            .catch((error) => {
-                console.error("Error playing audio:", error);
-            });
-            alert("Not yet! Stay tuned.");
-        }
-        </script>
-    <script type="module" src="./game/script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <title>JS Pacman</title>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="game"></div>
+      <div id="score"></div>
+      <button id="start-button">Start Game</button>
+    </div>
+    <script src="./index.js"></script>
+  </body>
 </html>
