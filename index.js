@@ -5,7 +5,7 @@ const gameGrid =document.querySelector("#game")
 const scoretable=document.querySelector("#score")
 const startButton =document.querySelector("#start-button")
 //GAME Constants
-const POWER_PILL_TIME=1000
+const POWER_PILL_TIME=10000
 const GLOBAL_SPEED=80
 
 
@@ -17,7 +17,7 @@ let gamewin=false
 let powerPillActive=false
 let powerPillTimer=null
 
-function GameOver(pacman,grid){
+function GameOver(pacman,grid){ 
 
 }
 
@@ -29,5 +29,5 @@ function gameLoop(pacman,ghosts){
 }
 
 function startGame(){
-    
+
 }
