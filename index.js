@@ -33,10 +33,10 @@ function checkCollision(pacman,grid){
 
 }
 function gameLoop(pacman,ghosts){
-
+gameBoard.moveCharacter(pacman)
 }
 
-function startGame(){
+function startGame( ){
 gamewin=false
 score=0
 powerPillActive=false
