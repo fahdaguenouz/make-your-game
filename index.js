@@ -44,10 +44,10 @@ powerPillActive=false
 startButton.classList.add('hide')
 gameBoard.createGrid(LEVEL)
 const pacman=new Pacman(2,287)
-gameBoard.addObject(287,[OBJECT_TYPE.PACMAN])
-document.addEventListener('keydown',()=>{
-    pacman.handleKeyInput(e,gameBoard.objectExist)
-})
+  gameBoard.addObject(287, [OBJECT_TYPE.PACMAN]);
+  document.addEventListener('keydown', (e) =>
+    pacman.handleKeyInput(e, gameBoard.objectExist.bind(gameBoard))
+  );
 timer=setInterval(()=>{
     gameLoop(pacman)
 },GLOBAL_SPEED)
