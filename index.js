@@ -1,6 +1,7 @@
 
 import {LEVEL,OBJECT_TYPE} from "./setup.js"
 //classes
+console.log(LEVEL);
 
 import GameBoard from "./GameBoard.js"
 
