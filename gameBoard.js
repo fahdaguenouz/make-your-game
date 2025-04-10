@@ -20,7 +20,7 @@ class GameBoard {
         level.forEach((square)=>{
             const  div= document.createElement('div')
             div.classList.add('square',class_list[square])
-            console.log(class_list[square]);
+            //console.log(class_list[square]);
             
             div.style.cssText=`width: ${cell_size}px; height:${cell_size}px;`
             this.DOMGrid.appendChild(div)
@@ -39,11 +39,13 @@ class GameBoard {
         return this.grid[pos].classList.contains(obj)
     }
     rotatePacMan(pos, deg){
+       // console.log(deg);
+        
         this.grid[pos].style.transform=`rotate(${deg}deg)`
     }
     moveCharacter(character){
         if(character.shouldMove()){
-            const {nextMovePos, direction}=character.getNextMove(this.objectExists.bind(this))
+            const {nextMovePos, direction}=character.getNextMove(this.objectExists)
             const {classesToRemove, classesToAdd}=character.makeMove()
             if(character.rotation&& nextMovePos!==character.pos){
                 this.rotatePacMan(nextMovePos,character.dir.rotation)

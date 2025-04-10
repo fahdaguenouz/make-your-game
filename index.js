@@ -9,7 +9,7 @@ const soundDot = './sounds/munch.wav';
 const soundPill = './sounds/pill.wav';
 const soundGameStart = './sounds/game_start.wav';
 const soundGameOver = './sounds/death.wav';
-const soundGhost = 'padding./sounds/eat_ghost.wav';
+const soundGhost = './sounds/eat_ghost.wav';
 
 const gameGrid = document.querySelector('#game');
 const scoreTab = document.querySelector('#score');
@@ -23,14 +23,13 @@ const clockDisplay = document.querySelector('#clock');
 const level = document.querySelector('#level');
 
 const power_pill_timer = 10000;
-const speed = 80;
+const speed = 70;
 const gameBoard = GameBoard.createGameBoard(gameGrid, LEVEL);
 
 let score = 0;
 let lives = 3;
 let winTime=0;
-let clock = 900000; // 15 minutes in ms
-let timer = null;
+let clock = 900000; 
 let clockTimer = null;
 let isWinner = false;
 let powerPillActive = false;
@@ -39,8 +38,10 @@ let animationId = null;
 let lastTimestamp = 0;
 let isPaused = false;
 let isGameOver = false;
+let started=false;
+
 let pacman;
-let ghosts;
+let ghosts=[];
 
 let collision = false;
 
@@ -56,8 +57,10 @@ function handleKeyDown(e) {
 function gameOver() {
     playAudio(soundGameOver);
     livesDisplay.innerHTML = lives;
+    winTime=0
     document.removeEventListener('keydown', handleKeyDown);
     if (isWinner){
+        startBtn.classList.remove('hide')
         startBtn.innerHTML="Play Again"
     }
     gameBoard.showGameStatus(isWinner);
@@ -66,6 +69,7 @@ function gameOver() {
         cancelAnimationFrame(animationId);
         animationId = null;
     }
+
     clearInterval(clockTimer);
     isGameOver=true
     startBtn.classList.remove('hide');
@@ -79,31 +83,32 @@ function getKilled() {
     }
     gameBoard.removeObject(pacman.pos, [OBJECT_TYPE.PACMAN]);
     gameBoard.rotatePacMan(pacman.pos, 0);
-    
+
+    ghosts.forEach(ghost => {
+        gameBoard.removeObject(ghost.pos, [
+            OBJECT_TYPE.GHOST,
+            OBJECT_TYPE.SCARED,
+            ghost.name
+        ]);
+        ghost.reset();
+    });
+
     pacman = new Pacman(2, 287);
     gameBoard.addObject(287, [OBJECT_TYPE.PACMAN]);
     
     document.removeEventListener('keydown', handleKeyDown);
     document.addEventListener('keydown', handleKeyDown);
     
-    ghosts.forEach(ghost => {
-      gameBoard.removeObject(ghost.pos, [
-        OBJECT_TYPE.GHOST,
-        OBJECT_TYPE.SCARED,
-        ghost.name
-      ]);
-    });
-    
     ghosts = [
-      new Ghost(5, 188, randomMovement, OBJECT_TYPE.BLINKY),
-      new Ghost(4, 209, randomMovement, OBJECT_TYPE.PINKY),
-      new Ghost(3, 230, randomMovement, OBJECT_TYPE.INKY),
-      new Ghost(2, 251, randomMovement, OBJECT_TYPE.CLYDE)
+        new Ghost(5, 188, randomMovement, OBJECT_TYPE.BLINKY),
+        new Ghost(4, 209, randomMovement, OBJECT_TYPE.PINKY),
+        new Ghost(3, 230, randomMovement, OBJECT_TYPE.INKY),
+        new Ghost(2, 251, randomMovement, OBJECT_TYPE.CLYDE)
     ];
     
     setTimeout(() => {
         startGameLoop();
-      }, 1000);
+    }, 1000);
 }
 
 function checkCollision(pacman, ghosts) {
@@ -128,7 +133,6 @@ function checkCollision(pacman, ghosts) {
                 gameBoard.rotatePacMan(pacman.pos, 0);
                 gameOver();
             } else {
-                clearInterval(timer);
                 getKilled();
             }
         }
@@ -141,12 +145,11 @@ function checkCollision(pacman, ghosts) {
 
 function gameLoop(pacman, ghosts) {
     collision = false;
-
     livesDisplay.innerHTML = lives;
     level.innerHTML = winTime+1;
 
     gameBoard.moveCharacter(pacman);
-    checkCollision(pacman, ghosts);
+    // checkCollision(pacman, ghosts);
 
     ghosts.forEach(ghost => gameBoard.moveCharacter(ghost));
     checkCollision(pacman, ghosts);
@@ -175,13 +178,14 @@ function gameLoop(pacman, ghosts) {
     }
 
     if (gameBoard.dotCount == 0) {
-        winTime++
-       startGame()
-    } else if(winTime==3){
-        isWinner = true;
-        gameOver();
+        winTime++;
+        if (winTime === 3) {
+            isWinner = true;
+            gameOver();
+        } else {
+            startGame();
+        }
     }
-
     scoreTab.innerHTML = score;
 }
 function gameAnimationLoop(timestamp) {
@@ -191,6 +195,7 @@ function gameAnimationLoop(timestamp) {
     
     // Only update game if enough time has passed according to desired speed
     if (elapsed >= speed) {
+        
         gameLoop(pacman, ghosts);
         lastTimestamp = timestamp;
     }
@@ -207,28 +212,26 @@ function startGameLoop() {
     isGameOver = false;
     animationId = requestAnimationFrame(gameAnimationLoop);
 }
-function startClock() {
-    clock = 900000; // 15 minutes in milliseconds
+
+function startClock(initialTime = 900000) {
+    clock = initialTime; 
     
-    // Format time as MM:SS
+    // Format MM:SS
     const formatTime = (milliseconds) => {
         const totalSeconds = Math.floor(milliseconds / 1000);
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
-        
-        // Add leading zeros if needed
+
         const formattedMinutes = minutes.toString().padStart(2, '0');
         const formattedSeconds = seconds.toString().padStart(2, '0');
         
         return `${formattedMinutes}:${formattedSeconds}`;
     };
     
-    // Initial display
     clockDisplay.innerHTML = formatTime(clock);
     
-    // Update clock every second
     clockTimer = setInterval(() => {
-        clock -= 1000;
+        clock -= 10;
         
         if (clock <= 0) {
             clock = 0;
@@ -237,9 +240,11 @@ function startClock() {
         }
         
         clockDisplay.innerHTML = formatTime(clock);
-    }, 1000);
+    }, 10);
 }
+
 function startGame() {
+    started= true
     playAudio(soundGameStart);
     isWinner = false;
     powerPillActive = false;
@@ -269,7 +274,8 @@ function startGame() {
     ];
 
     startClock();
-    startGameLoop();}
+    startGameLoop();
+}
 
 function pauseGame() {
     if (!isPaused) {
@@ -286,10 +292,8 @@ function pauseGame() {
         menubar.classList.remove('show')
         pauseBtn.classList.remove('hide') 
 
-        startClock(); 
+        startClock(clock); 
         isPaused = false;
-        
-
     }
 }
 
@@ -299,7 +303,6 @@ function restartGame() {
         animationId = null;
     }
 
-    
     if (clockTimer) {
         clearInterval(clockTimer);
         clockTimer = null;
@@ -312,7 +315,6 @@ function restartGame() {
     menubar.classList.remove('show')
     pauseBtn.classList.remove('hide') 
 
-    
     document.removeEventListener('keydown', handleKeyDown);
     
     isWinner = false;
@@ -335,7 +337,6 @@ function restartGame() {
     }
     
     scoreTab.innerHTML = score;
-    pauseBtn.textContent = "Pause";
     
     startBtn.classList.remove('hide');
     pauseBtn.classList.remove('show');
@@ -343,9 +344,9 @@ function restartGame() {
     
     startGame();
 }
- document.addEventListener('keydown',(e)=>{
+document.addEventListener('keydown',(e)=>{
    console.log(e.keyCode);
-   if(e.keyCode==32){
+   if(e.keyCode==32 && !started && !isPaused){
     startGame();
 }else if(e.keyCode==27){
 pauseGame();
@@ -353,8 +354,8 @@ pauseGame();
 }else if(e.keyCode==82){
     restartGame()
 }
-
 })
+
 startBtn.addEventListener('click', startGame);
 pauseBtn.addEventListener('click', pauseGame);
 resumeBtn.addEventListener('click', pauseGame);
