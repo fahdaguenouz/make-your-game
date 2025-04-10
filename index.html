@@ -1,18 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css">
-    <title>JS Pacman</title>
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+</head>
+<body>
     <div id="wrapper">
-      <div id="game"></div>
-      <div id="score"></div>
-      <button id="start-button">Start Game</button>
-    </div>
-    <script type="module" src="index.js"></script>
+        <div style="color: white;">Lives: <span id="lives">3</span></div>
+        <div style="color: white;">Level: <span id="level">1</span></div>
+        <div style="color: white;">Clock: <span id="clock">15 </span>min</div>
 
-  </body>
+        <div id="game"></div>
+
+            <div id="score">
+
+            </div>
+            <button id="start-game">Start</button>
+            <button id="pause-game">Pause</button>
+            
+                <div id="menu" >
+                    <button id="resume-game">Continue</button>
+                    <button id="restart-game">Restart</button>                
+            </div>
+      
+    </div>
+    <script type="module" src="./index.js"></script>
+</body>
 </html>
