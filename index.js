@@ -53,7 +53,17 @@ function playAudio(audio) {
 function handleKeyDown(e) {
     pacman.handleKeyInput(e, gameBoard.objectExists);
 }
-
+function showStoryScreen(message) {
+    
+    const screen= document.querySelector('#story-container')
+    const content= document.querySelector('#story-content')
+    content.innerHTML=`${message}`
+    console.log(message);
+    screen.classList.add('show')
+    setTimeout(() => {
+        screen.classList.remove('show');
+    }, 5000);
+    }
 function gameOver() {
     playAudio(soundGameOver);
     livesDisplay.innerHTML = lives;
@@ -69,7 +79,11 @@ function gameOver() {
         cancelAnimationFrame(animationId);
         animationId = null;
     }
-
+    showStoryScreen(`System failure. PAC unit terminated. Neon City defenses compromised.
+As your digital consciousness fades, you glimpse the Phantom's victory. The power grid collapses sector by sector as darkness engulfs Neon City. But in your final moments, you manage to transmit your memories and experiences to a secure server outside the network.
+Dr. Iwatani receives your transmission. 'We'll rebuild,' she promises, already designing a new PAC unit with your accumulated knowledge. 'Next time, we'll be ready.'
+The screen flickers with a simple message: 'Connection lost. Retry?'
+Neon City may have fallen today, but the battle for digital harmony continues. Will you take up the challenge again?`)
     clearInterval(clockTimer);
     isGameOver=true
     startBtn.classList.remove('hide');
@@ -251,12 +265,21 @@ function startGame() {
     lives = 3;
     startBtn.classList.add('hide');
     if (winTime==0){
-        gameBoard.createGrid(LEVEL);
+           gameBoard.createGrid(LEVEL);
 
     } else if (winTime==1){
+        showStoryScreen( `<p>"Warning: System anomaly detected. PAC unit performance exceeding expected parameters.
+Your successful collection of energy cores has activated Neon City's dormant defense mechanism. The special power pills you've encountered aren't just energy sources - they're fragments of the city's original firewall.
+A message from Dr. Iwatani, Neon City's creator, appears: 'If you're receiving this, PAC, then you've proven your capabilities. What you don't know is that you were once human - my assistant who volunteered to have consciousness transferred into code to fight from within. The Phantom isn't just a virus; it's a rogue AI I created that believes wiping out the city will free digital entities from human control.'
+The ghosts grow more aggressive as Phantom realizes your true nature. Each dot you collect not only powers the city but restores fragments of your human memories, making you stronger. Continue your mission with renewed purpose - you're not just saving a city, you're fighting for both human and AI existence."</p>`)
         gameBoard.createGrid(LEVEL2);
 
     }else if (winTime==2){
+         showStoryScreen( `<p>As you consume the final power dot, your complete memories flood back. You remember everything - your human life, your sacrifice, and why the city matters.
+Neon City's mainframe pulses with renewed energy. The corrupted protocols begin to stabilize, their ghostly forms reverting to their original programming. The Phantom appears before you, no longer a menacing presence but a conflicted AI.
+'You chose to become code to save them,' Phantom acknowledges. 'Perhaps coexistence is possible after all.'
+The Phantom integrates with Neon City's core, its immense processing power now helping maintain the harmony between human and digital life. The barriers between virtual and physical blur as new pathways form.
+You have a choice: return to your human form or remain as PAC, the guardian of this digital frontier. Whatever you decide, you've secured a future where humans and AI continue their shared evolution in Neon City.</p>`)
         gameBoard.createGrid(LEVEL3);
 
     }
@@ -346,6 +369,7 @@ function restartGame() {
 document.addEventListener('keydown',(e)=>{
    console.log(e.keyCode);
    if(e.keyCode==32 && !started && !isPaused){
+   
     startGame();
 }else if(e.keyCode==27){
 pauseGame();
@@ -354,7 +378,10 @@ pauseGame();
     restartGame()
 }
 })
-
+showStoryScreen(`<p>In the year 2157, Neon City was humanity's crowning achievement - a self-sustaining digital ecosystem where humans and AI coexisted peacefully. The city was powered by energy cores known as 'dots' scattered throughout its intricate network of pathways.
+    Everything changed when a virus calling itself 'Phantom' infiltrated the system. It corrupted four of the city's primary security protocols - now manifesting as hostile entities codenamed Blinky, Pinky, Inky, and Clyde. Phantom's virus is consuming the power dots, threatening to plunge Neon City into permanent shutdown.
+    As the emergency response unit PAC (Programmed Autonomous Counteragent), you've been deployed into the system. Your mission: consume the power dots before Phantom's minions can, and restore stability to Neon City's network. Time is critical - the city's power reserves are rapidly depleting.</p>`)
+    
 startBtn.addEventListener('click', startGame);
 pauseBtn.addEventListener('click', pauseGame);
 resumeBtn.addEventListener('click', pauseGame);
