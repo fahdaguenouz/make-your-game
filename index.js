@@ -113,7 +113,6 @@ function getKilled() {
 
 function checkCollision(pacman, ghosts) {
     if (collision) return;
-
     const collidedGhost = ghosts.find(ghost => pacman.pos === ghost.pos);
     if (collidedGhost) {
         collision = true;
